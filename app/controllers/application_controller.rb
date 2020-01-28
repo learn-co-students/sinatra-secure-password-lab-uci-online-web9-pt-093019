@@ -41,7 +41,6 @@ class ApplicationController < Sinatra::Base
 
   post '/account' do
     user = current_user
-    puts params
     new_balance = user.balance + params[:deposit].to_i
     if new_balance >= params[:withdrawel].to_i
       new_balance -= params[:withdrawel].to_i
