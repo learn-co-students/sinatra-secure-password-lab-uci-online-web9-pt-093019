@@ -39,6 +39,24 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  post '/account' do
+    user = current_user
+    puts params
+    new_balance = user.balance + params[:deposit].to_i
+    if new_balance >= params[:withdrawel].to_i
+      new_balance -= params[:withdrawel].to_i
+      user.balance = new_balance
+      user.save
+      redirect "/account"
+    else
+      redirect "/deposit_error"
+    end
+  end
+
+  get '/deposit_error' do
+    @user = current_user
+    erb :deposit_error
+  end
 
   get "/login" do
     erb :login
